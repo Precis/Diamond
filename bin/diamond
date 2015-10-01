@@ -60,7 +60,7 @@ def main():
                           action="store_true",
                           help="log to stdout")
 
-        parser.add_option("-ll", "--log-stdout-level",
+        parser.add_option("--log-stdout-level",
                           dest="log_stdout_level",
                           default=None,
                           help="log to stdout with level")
