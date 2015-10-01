@@ -60,6 +60,11 @@ def main():
                           action="store_true",
                           help="log to stdout")
 
+        parser.add_option("-ll", "--log-stdout-level",
+                          dest="log_stdout_level",
+                          default=None,
+                          help="log to stdout with level")
+
         parser.add_option("-p", "--pidfile",
                           dest="pidfile",
                           default=None,
@@ -124,7 +129,7 @@ def main():
             sys.exit(1)
 
         # Initialize Logging
-        log = setup_logging(options.configfile, options.log_stdout)
+        log = setup_logging(options.configfile, options.log_stdout_level or options.log_stdout)
 
     # Pass the exit up stream rather then handle it as an general exception
     except SystemExit, e:
