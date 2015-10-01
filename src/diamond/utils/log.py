@@ -32,15 +32,21 @@ class DebugFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-def setup_logging(configfile, stdout=False):
+def setup_logging(configfile, stdout=None):
     log = logging.getLogger('diamond')
 
     if stdout:
-        log.setLevel(logging.DEBUG)
-        streamHandler = logging.StreamHandler(sys.stdout)
-        streamHandler.setFormatter(DebugFormatter())
-        streamHandler.setLevel(logging.DEBUG)
-        log.addHandler(streamHandler)
+        if stdout is True:
+            log_level = logging.DEBUG
+        else:
+            log_level = logging.getLevelName(stdout)
+            if not isinstance(log_level, int):
+                log_level = logging.DEBUG
+        log.setLevel(log_level)
+        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler.setFormatter(DebugFormatter())
+        stream_handler.setLevel(log_level)
+        log.addHandler(stream_handler)
     else:
         try:
             if sys.version_info >= (2, 6):
